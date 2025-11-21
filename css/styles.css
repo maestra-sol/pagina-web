@@ -1,0 +1,691 @@
+:root {
+    --bg: #0a0610;
+    /* negro violáceo profundo */
+    --bg-alt: #0f0a17;
+    --card: #151021;
+    --primary: #b3124a;
+    /* carmesí */
+    --primary-900: #6d0b2d;
+    --text: #f6f5ff;
+    --muted: #b9b0d1;
+    --accent: #e7b85a;
+    /* dorado */
+    --glow: 0 0 0 1px rgba(231, 184, 90, .15), 0 0 24px rgba(179, 18, 74, .18);
+    --ring: 0 0 0 3px rgba(179, 18, 74, .35);
+
+    /* Nuevo: Brillo para texto/elementos importantes */
+    --text-glow: 0 0 4px var(--accent), 0 0 8px rgba(231, 184, 90, .3);
+}
+
+* {
+    box-sizing: border-box
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    /* Mantiene el fondo original con el degradado */
+    background:
+        radial-gradient(1200px 800px at 80% -10%, #1b1428 0%, rgba(27, 20, 40, 0) 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+    color: var(--text);
+    font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, sans-serif
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .28;
+    /* Mantiene el efecto de "estrellas" o ruido de fondo */
+    background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, .15) 40%, transparent 41%),
+        radial-gradient(1px 1px at 30% 80%, rgba(255, 255, 255, .1) 40%, transparent 41%),
+        radial-gradient(1.5px 1.5px at 70% 30%, rgba(255, 255, 255, .12) 40%, transparent 41%),
+        radial-gradient(1px 1px at 90% 60%, rgba(255, 255, 255, .08) 40%, transparent 41%);
+    z-index: 0
+}
+
+a {
+    color: inherit;
+    text-decoration: none
+}
+
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: var(--ring)
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin-inline: auto;
+    position: relative;
+    z-index: 1
+}
+
+/* Header y Navbar */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background: rgba(10, 6, 16, .6);
+    border-bottom: 1px solid rgba(255, 255, 255, .06)
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0
+}
+
+.brand {
+    display: flex;
+    gap: 10px;
+    align-items: center
+}
+
+.brand-logo {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    /* Cambio: Conic Gradient sutil con Dorado */
+    background: conic-gradient(from 20deg, var(--primary), var(--accent), var(--primary));
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(179, 18, 74, .35);
+    /* Nuevo: El logo de luna/estrella brilla */
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    font-size: 1.5rem;
+    /* Luna más grande */
+}
+
+.brand span {
+    font-family: Cinzel, serif;
+    font-weight: 700;
+    letter-spacing: .4px
+}
+
+.menu {
+    display: flex;
+    gap: 18px;
+    align-items: center
+}
+
+/* Botones */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .04);
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: var(--glow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Transición para hover */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow), 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn.primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-900));
+    border: none
+}
+
+.btn.whatsapp {
+    background: #25D366;
+    color: #111;
+    font-weight: 700;
+    /* Nuevo: Efecto de brillo sutil en WhatsApp */
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
+}
+
+.btn.whatsapp:hover {
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.8);
+}
+
+/* --- Nuevo Botón Flotante Consolidado (.floating-cta) --- */
+.floating-cta {
+    position: fixed;
+    bottom: 30px;
+    /* Posición más arriba */
+    right: 25px;
+    z-index: 1000;
+
+    /* El contenedor es relativo para posicionar el badge */
+    display: block;
+    position: fixed;
+    transition: transform 0.3s ease;
+    /* La animación se aplicará al contenedor */
+    animation: whatsappPulseGlow 3s infinite ease-in-out;
+}
+
+.floating-cta:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo para la imagen real de WhatsApp */
+.whatsapp-icon {
+    width: 65px;
+    height: 65px;
+    display: block;
+    /* Asegura que el brillo sea visible en la imagen */
+    filter: drop-shadow(0 0 10px rgba(255, 204, 0, 0.5));
+}
+
+/* --- Corrección del Badge Flotante --- */
+.floating-cta .badge18 {
+    /* Posicionamiento del badge sobre el icono */
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    /* Desplazamos un poco más a la derecha y arriba */
+
+    /* Estilo del badge, adaptado al misticismo */
+    background: var(--primary-900);
+    color: #fff;
+    border: 1px solid var(--primary);
+
+    /* MODIFICACIÓN CLAVE: Reducimos el padding */
+    padding: 3px 6px;
+    font-size: 10px;
+    line-height: 1;
+    white-space: nowrap;
+    /* Aseguramos que el texto esté en una sola línea */
+
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(179, 18, 74, 0.5);
+
+    pointer-events: none;
+    transform: rotate(5deg);
+
+    z-index: 10;
+}
+
+.cta-main {
+    font-size: 1.1rem;
+    /* Botón principal más grande */
+}
+
+.mobile-toggle {
+    display: none
+}
+
+@media (max-width:760px) {
+    .menu {
+        display: none
+    }
+
+    .mobile-toggle {
+        display: inline-flex
+    }
+
+    .menu.open {
+        position: absolute;
+        inset: 60px 0 auto 0;
+        background: rgba(10, 6, 16, .96);
+        display: flex;
+        flex-direction: column;
+        padding: 16px
+    }
+}
+
+.notice {
+    background: linear-gradient(90deg, rgba(179, 18, 74, .18), rgba(231, 184, 90, .10));
+    border: 1px solid rgba(179, 18, 74, .35);
+    padding: 10px 14px;
+    border-radius: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 0;
+    /* Ya tenemos margen en los chips */
+    padding: 10px 14px;
+    font-size: 14px;
+    /* Hacemos el aviso más legible */
+    max-width: fit-content;
+    margin-inline: auto;
+}
+
+/* Hero Section Potenciado */
+
+.hero-section {
+    position: relative;
+    /* **IMPORTANTE: Aquí debes poner la ruta de tu imagen de fondo** */
+    background: url("../img/altar.png") center/cover no-repeat;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* Capa más oscura para mejor contraste del texto */
+    background: linear-gradient(to bottom, rgba(10, 6, 16, .8), rgba(10, 6, 16, 1));
+}
+
+.hero {
+    /* Se cambia el grid a un flex o centrado simple para que el texto sea el foco */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0 10px;
+    width: 100%;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding-bottom: 20px;
+}
+
+.hero h1 {
+    font-family: Cinzel, serif;
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 1.1;
+    margin: 12px 0 30px;
+    /* Añade un brillo/sombra de texto sutil para destacar */
+    text-shadow: var(--text-glow);
+}
+
+.hero .accent-text {
+    color: var(--accent);
+    /* Dorado para el nombre */
+}
+
+.hero p.lead-hero {
+    color: var(--text);
+    /* Texto más legible en el hero */
+    font-size: clamp(16px, 2.4vw, 20px);
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+.hero .cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.hero-chips {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+/* Secciones, Títulos y Separadores */
+
+.section {
+    padding: 56px 0
+}
+
+.section h2 {
+    font-family: Cinzel, serif;
+    font-size: clamp(22px, 3vw, 34px);
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    /* Centrar títulos */
+    color: var(--accent);
+    /* Títulos de sección en dorado */
+    text-shadow: 0 0 5px rgba(231, 184, 90, .2);
+}
+
+.divider {
+    inline-size: 80px;
+    /* Separador más largo para más impacto */
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.section p.lead {
+    color: var(--muted);
+    margin: 0 0 18px;
+    text-align: center;
+    max-width: 700px;
+    margin-inline: auto
+}
+
+/* Grid de Servicios */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    /* Aumentar el espacio entre tarjetas */
+    max-width: 900px;
+    margin-inline: auto;
+}
+
+/* Tarjetas de Servicios (Cards) con Iconografía */
+.card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 18px;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--glow);
+
+    /* Estilos nuevos para centrar contenido */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: background 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.card:hover {
+    background: var(--card);
+    /* Fondo más sólido al pasar el mouse */
+    border-color: rgba(179, 18, 74, .4);
+    transform: translateY(-5px);
+}
+
+.card i {
+    font-size: 38px;
+    color: var(--accent);
+    /* Iconos en dorado */
+    margin-bottom: 10px;
+    text-shadow: var(--text-glow);
+}
+
+.card h3 {
+    font-family: Cinzel, serif;
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700
+}
+
+.card p {
+    margin: 0;
+    color: #d6d6e7;
+    font-size: 14px
+}
+
+.card::after {
+    /* Eliminar el "✶" genérico */
+    content: none;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .1);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px
+}
+
+/* Carrusel y Testimonios Estilizados */
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+    box-shadow: var(--glow);
+    max-width: 900px;
+    margin-inline: auto;
+}
+
+.slides {
+    display: flex;
+    transition: transform .5s ease
+}
+
+.slide {
+    min-width: 100%;
+    padding: 30px 18px;
+    /* Más padding */
+}
+
+.testimonial-card {
+    /* Nuevo estilo para que no parezca WhatsApp */
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.wh-avatar {
+    /* Estilo para el avatar genérico/místico */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    /* Circular */
+    background: #3a2e4a;
+    /* Color místico */
+    border: 3px solid var(--accent);
+    margin-bottom: 15px;
+}
+
+.wh-bubble {
+    /* Estilo más de cita/papiro */
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 600px;
+    margin-top: 8px;
+}
+
+.wh-card strong {
+    color: var(--accent);
+    /* Nombre en dorado */
+    font-weight: 700;
+}
+
+.accent-star {
+    color: var(--accent);
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+.carousel .controls {
+    position: absolute;
+    inset: auto 10px 10px 10px;
+    display: flex;
+    justify-content: space-between
+}
+
+.ctrl {
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .12);
+    backdrop-filter: blur(6px);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer
+}
+
+/* Contacto y CTA Final */
+
+.contact {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 18px
+}
+
+.contact .panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 18px;
+    padding: 30px;
+    /* Más padding */
+    box-shadow: var(--glow)
+}
+
+.contact h2 {
+    font-size: clamp(24px, 3.5vw, 36px);
+    justify-content: flex-start;
+    /* Alineación a la izquierda */
+    color: var(--text);
+    /* Volver a color blanco para este CTA */
+    text-shadow: none;
+}
+
+.contact .lead {
+    text-align: left;
+    /* Alineación a la izquierda */
+}
+
+.info-panel h3 {
+    font-family: Cinzel, serif;
+    font-size: 22px;
+}
+
+.info-panel ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.info-panel li {
+    margin-bottom: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+}
+
+.info-panel i {
+    color: var(--accent);
+    /* Check en dorado */
+    margin-right: 10px;
+    margin-top: 4px;
+    /* Pequeño ajuste vertical */
+}
+
+/* Footer y Botón Flotante */
+
+footer {
+    padding: 26px 0;
+    color: #cfcfe6;
+    border-top: 1px solid rgba(255, 255, 255, .06);
+    margin-top: 30px
+}
+
+.floating {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 60
+}
+
+.floating .whatsapp {
+    border-radius: 999px;
+    padding: 12px 16px;
+    font-weight: 700
+}
+
+.badge18 {
+    background: #2a1b1b;
+    color: #ffb4b4;
+    border: 1px solid #422;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 12px
+}
+
+
+/* Media Queries para Responsividad */
+
+@media (max-width:980px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr)
+    }
+}
+
+@media (max-width:760px) {
+    .hero-section {
+        min-height: 70vh;
+    }
+
+    .hero {
+        padding: 10px 0 10px;
+    }
+
+    .grid {
+        grid-template-columns: 1fr
+    }
+
+    .contact {
+        grid-template-columns: 1fr
+    }
+
+    .contact .panel {
+        text-align: center;
+    }
+
+    .contact h2,
+    .contact .lead,
+    .info-panel ul {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .info-panel li {
+        justify-content: center;
+    }
+
+    .info-panel i {
+        margin-right: 5px;
+    }
+
+    .hero-chips {
+        justify-content: center;
+    }
+}
+
+/* Ajuste de animación para un brillo más místico */
+@keyframes whatsappPulseGlow {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
