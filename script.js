@@ -2,7 +2,9 @@
 function getWhatsAppLink() {
     const phoneNumber = "573000000000"; // Tu número aquí
     const message = "Hola Maestra Sol, me gustaría agendar una consulta.";
-    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const baseUrl = isMobile ? "https://api.whatsapp.com/send" : "https://web.whatsapp.com/send";
+    return `${baseUrl}?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
 }
 
 // Asignar enlaces de WhatsApp
