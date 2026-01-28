@@ -1,18 +1,15 @@
 :root {
-    --bg: #0a0610;
-    /* Negro violáceo profundo */
-    --bg-nav: #050308;
-    /* Color para la barra de navegación */
-    --card: #151021;
+    /* --- PALETA CLARA --- */
+    --bg: #f9f9f9;
+    --bg-nav: #ffffff;
+    --card: #ffffff;
     --primary: #b3124a;
-    /* Carmesí */
     --primary-900: #6d0b2d;
-    --text: #f6f5ff;
-    --muted: #b9b0d1;
-    --accent: #e7b85a;
-    /* Dorado */
-    --glow: 0 0 0 1px rgba(231, 184, 90, .15), 0 0 24px rgba(179, 18, 74, .18);
-    --text-glow: 0 0 8px rgba(231, 184, 90, .4), 0 0 16px rgba(179, 18, 74, .2);
+    --text: #333333;
+    --muted: #666666;
+    --accent: #d4af37;
+    --glow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --border-light: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -23,8 +20,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: radial-gradient(1200px 800px at 80% -10%, #1b1428 0%, rgba(27, 20, 40, 0) 60%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
+    background: linear-gradient(180deg, #ffffff 0%, #f4f4f4 100%);
     color: var(--text);
     font-family: Poppins, system-ui, sans-serif;
     scroll-behavior: smooth;
@@ -35,9 +31,9 @@ body::before {
     position: fixed;
     inset: 0;
     pointer-events: none;
-    opacity: .28;
-    background-image: radial-gradient(2px 2px at 10% 20%, rgba(255, 255, 255, .15) 40%, transparent 41%),
-        radial-gradient(1.5px 1.5px at 70% 30%, rgba(255, 255, 255, .12) 40%, transparent 41%);
+    opacity: .05;
+    background-image: radial-gradient(2px 2px at 10% 20%, #000 40%, transparent 41%),
+        radial-gradient(1.5px 1.5px at 70% 30%, #000 40%, transparent 41%);
     z-index: 0;
 }
 
@@ -55,100 +51,138 @@ a {
 }
 
 /* =========================================
-   1. NUEVO HEADER ESTILO SARA
+   1. HEADER COMPACTO CON DOBLE IMAGEN
    ========================================= */
 .main-header {
     position: relative;
-    /* Usamos tu imagen de fondo */
-    background-image: url('/img/altar.webp');
-    background-size: cover;
-    background-position: center bottom;
-    /* Prioridad a la parte de abajo de la imagen */
-    background-repeat: no-repeat;
-
-    /* Padding grande arriba y abajo para darle altura */
-    padding: 8rem 1rem 6rem;
-    text-align: center;
-    border-bottom: 3px solid var(--accent);
+    background: transparent;
+    padding: 3rem 0;
+    /* Padding reducido (era 4rem) */
+    overflow: hidden;
 }
 
-/* Capa oscura sobre la imagen */
-.main-header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(10, 6, 16, .6), rgba(10, 6, 16, .9));
-    z-index: 0;
+.header-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
 }
 
-.header-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    margin: 0 auto;
+.header-text-col {
+    text-align: left;
+    z-index: 2;
 }
 
+/* Títulos más juntos */
 .main-header h1 {
-    font-family: Cinzel, serif;
-    font-size: clamp(3rem, 6vw, 5rem);
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5vw, 4rem);
     line-height: 1.1;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
+    margin-bottom: 10px;
+    /* Reducido drásticamente (era 1.5rem) */
     color: var(--text);
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
 .main-header .accent-text {
-    color: var(--accent);
-    text-shadow: var(--text-glow);
+    color: var(--primary);
     display: block;
-    margin-bottom: 10px;
+    font-size: 0.6em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    /* Reducido */
+}
+
+/* Imagen Móvil (Oculta en PC por defecto) */
+.mobile-image-wrapper {
+    display: none;
 }
 
 .main-header .intro {
-    font-family: Cinzel, serif;
-    font-size: 1.2rem;
-    color: #e0e0e0;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 15px;
+    /* Reducido drásticamente (era 2rem) */
+    line-height: 1.5;
+    max-width: 500px;
 }
 
-/* Chips en el header */
 .header-chips {
     display: flex;
-    gap: 10px;
-    justify-content: center;
+    gap: 8px;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+    /* Reducido */
 }
 
 .chip {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    backdrop-filter: blur(4px);
+    background: rgba(179, 18, 74, 0.08);
+    border: 1px solid rgba(179, 18, 74, 0.2);
+    color: var(--primary);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
 }
 
-.cta-header {
-    margin-top: 2rem;
+/* Columna Imagen PC */
+.header-image-col {
+    display: flex;
+    /* Visible en PC */
+    justify-content: center;
+    align-items: center;
+}
+
+.image-frame {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: perspective(1000px) rotateY(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.image-frame:hover {
+    transform: perspective(1000px) rotateY(0deg) translateY(-5px);
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+}
+
+.glow-effect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 /* =========================================
-   2. NAVBAR ESTILO SARA (Debajo del Header)
+   NAVBAR
    ========================================= */
 .navbar {
     background-color: var(--bg-nav);
-    border-bottom: 1px solid rgba(231, 184, 90, 0.3);
-    /* Borde dorado sutil */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     position: sticky;
-    /* Se pega al techo al hacer scroll */
     top: 0;
     z-index: 1000;
-    padding: 0.8rem 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    padding: 0.6rem 0;
+    /* Un poco más delgado */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .nav-container {
@@ -159,18 +193,16 @@ a {
     justify-content: space-between;
 }
 
-/* Logo compuesto (Icono + Texto) */
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .logo-icono {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
-    filter: drop-shadow(0 0 5px var(--accent));
 }
 
 .logo-texto {
@@ -181,75 +213,66 @@ a {
 
 .logo-nombre {
     font-family: Cinzel, serif;
-    font-size: 1.3rem;
-    color: var(--accent);
+    font-size: 1.2rem;
+    color: var(--text);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1;
 }
 
 .logo-ubicacion {
     font-family: Poppins, sans-serif;
-    font-size: 0.75rem;
-    color: var(--muted);
+    font-size: 0.7rem;
+    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Menú de escritorio */
 .nav-menu {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .nav-menu a {
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     text-transform: uppercase;
     transition: color 0.3s;
+    color: var(--text);
 }
 
 .nav-menu a:hover {
-    color: var(--accent);
+    color: var(--primary);
 }
 
-/* Botón hamburguesa móvil */
 .mobile-toggle {
     display: none;
     background: transparent;
-    border: none;
-    color: var(--accent);
-    font-size: 1.8rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 4px;
     cursor: pointer;
-}
-
-/* Aviso para mayores */
-.aviso-mayores {
-    background: linear-gradient(90deg, #2a0505, #3d0000);
-    color: #ffb4b4;
-    text-align: center;
-    padding: 0.6rem;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #500;
+    color: var(--text);
 }
 
 /* =========================================
-   ESTILOS GENERALES (Botones, Grid, etc.)
+   GENERALES
    ========================================= */
 .btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
+    padding: 10px 22px;
     border-radius: 50px;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 1rem;
-    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 0.95rem;
+    transition: transform 0.2s;
     cursor: pointer;
+    color: #fff;
 }
 
 .btn:hover {
@@ -258,34 +281,32 @@ a {
 
 .btn.whatsapp {
     background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
     border: none;
-    box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
 }
 
 .btn.primary {
     background: var(--accent);
-    color: var(--bg);
+    color: #000;
     border: none;
-    box-shadow: 0 0 10px rgba(231, 184, 90, 0.4);
+    box-shadow: 0 4px 10px rgba(231, 184, 90, 0.3);
 }
 
 .small-btn {
-    padding: 8px 16px;
-    font-size: 0.85rem;
+    padding: 6px 14px;
+    font-size: 0.8rem;
 }
 
-/* Grid de Servicios */
 .section {
-    padding: 60px 0;
+    padding: 50px 0;
 }
 
 .section h2 {
     font-family: Cinzel, serif;
-    color: var(--accent);
-    font-size: 2.5rem;
+    color: var(--text);
+    font-size: 2.2rem;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -293,16 +314,18 @@ a {
 }
 
 .divider {
-    height: 1px;
-    width: 60px;
+    height: 2px;
+    width: 40px;
     background: var(--accent);
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .lead {
     text-align: center;
     color: var(--muted);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+    font-weight: 400;
+    font-size: 1rem;
 }
 
 .grid {
@@ -312,74 +335,72 @@ a {
 }
 
 .card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .015));
-    border: 1px solid rgba(255, 255, 255, .08);
-    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
     box-shadow: var(--glow);
-    transition: background 0.3s, border-color 0.3s, transform 0.2s;
+    transition: all 0.3s;
     position: relative;
-
-    padding: 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
 .card-img-wrapper {
     width: 100%;
-    height: 220px;
+    height: 200px;
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card-img-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease, filter 0.3s ease;
-    filter: brightness(0.85);
+    transition: transform 0.5s ease;
 }
 
 .card:hover .card-img-wrapper img {
     transform: scale(1.1);
-    filter: brightness(1.1);
 }
 
 .card-body {
-    padding: 25px;
+    padding: 20px;
     text-align: center;
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
 }
 
 .card-body h3 {
     font-family: Cinzel, serif;
-    margin: 0 0 12px;
-    font-size: 1.25rem;
+    margin: 0 0 8px;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--accent);
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: var(--primary-900);
 }
 
 .card-body p {
     margin: 0;
-    color: #d6d6e7;
-    font-size: 0.95rem;
-    line-height: 1.6;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
-/* Carrusel */
+/* Carrusel y Footer */
 .carousel {
     overflow: hidden;
     position: relative;
     max-width: 800px;
     margin: auto;
     border-radius: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #fff;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--glow);
 }
 
 .slides {
@@ -389,7 +410,7 @@ a {
 
 .slide {
     min-width: 100%;
-    padding: 40px 20px;
+    padding: 30px 20px;
     display: flex;
     justify-content: center;
 }
@@ -397,67 +418,93 @@ a {
 .testimonial-card {
     text-align: center;
     max-width: 600px;
+    color: var(--text);
 }
 
 .wh-avatar {
-    width: 60px;
-    height: 60px;
-    background: var(--primary);
+    width: 50px;
+    height: 50px;
+    background: #eee;
     border-radius: 50%;
-    margin: 0 auto 15px;
+    margin: 0 auto 10px;
     border: 2px solid var(--accent);
 }
 
 .wh-bubble {
     font-style: italic;
-    margin-top: 10px;
-    line-height: 1.6;
+    margin-top: 8px;
+    line-height: 1.5;
+    color: var(--muted);
+    font-size: 0.95rem;
 }
 
 .controls {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    padding-bottom: 20px;
+    gap: 15px;
+    padding-bottom: 15px;
 }
 
 .ctrl {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--accent);
     border: none;
     color: white;
-    padding: 10px 15px;
+    padding: 8px 12px;
     cursor: pointer;
     border-radius: 50%;
+    font-weight: bold;
 }
 
-/* Contacto y Footer */
 .contact {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 20px;
     align-items: start;
 }
 
 .panel {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 30px;
+    background: #fff;
+    padding: 25px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--glow);
+}
+
+.panel h2,
+.panel h3 {
+    color: var(--primary-900);
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+.panel ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.panel li {
+    margin-bottom: 8px;
+    color: var(--muted);
+}
+
+.panel li i {
+    color: var(--accent);
+    margin-right: 8px;
 }
 
 footer {
     text-align: center;
     padding: 30px 0;
-    color: var(--muted);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #111;
+    color: #bbb;
     margin-top: 40px;
 }
 
-/* Botón flotante */
 .floating-cta {
     position: fixed;
-    bottom: 25px;
-    right: 25px;
+    bottom: 20px;
+    right: 20px;
     z-index: 2000;
     display: flex;
     flex-direction: column;
@@ -482,6 +529,14 @@ footer {
     border: 1px solid #600;
 }
 
+.aviso-mayores {
+    background: #2a0505;
+    color: #ffb4b4;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -496,33 +551,80 @@ footer {
     }
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .main-header {
-        min-height: 40vh;
-        padding: 6rem 1rem 4rem;
-        background-position: center center;
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 900px) {
+    .header-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 15px;
+        /* Súper compacto */
     }
 
+    .main-header {
+        padding: 2rem 0;
+        /* Menos padding en móvil */
+    }
+
+    .header-text-col {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Mostrar imagen interna en móvil y dar estilos */
+    .mobile-image-wrapper {
+        display: block;
+        width: 100%;
+        max-width: 350px;
+        margin: 10px 0 15px;
+        /* Espacio arriba y abajo controlado */
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-hero-image {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Ocultar la columna derecha en móvil */
+    .header-image-col {
+        display: none;
+    }
+
+    .header-chips {
+        justify-content: center;
+    }
+
+    .main-header .intro {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
     .contact {
         grid-template-columns: 1fr;
     }
 
-    /* Menú móvil */
     .mobile-toggle {
-        display: block;
+        display: flex;
     }
 
     .nav-menu {
         display: none;
-        flex-direction: column;
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
         background: var(--bg-nav);
+        flex-direction: column;
         padding: 20px;
-        border-bottom: 2px solid var(--accent);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid #eee;
     }
 
     .nav-menu.active {
