@@ -1,17 +1,38 @@
 // Configuración de WhatsApp Centralizada
 function getWhatsAppLink() {
-    const phoneNumber = "573000000000"; // Tu número aquí
-    const message = "Hola Maestra Sol, me gustaría agendar una consulta.";
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const baseUrl = isMobile ? "https://api.whatsapp.com/send" : "https://web.whatsapp.com/send";
-    return `${baseUrl}?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    const phoneNumber = "502XXXXXXXX"; // Reemplaza con tu número (código país+numero) sin + ni espacios, ej. 50212345678
+    const message = "Hola Maestra Sol, quiero apartar mi cupo.";
+    const baseUrl = "https://wa.me";
+    return `${baseUrl}/${phoneNumber}?text=${encodeURIComponent(message)}`;
 }
 
-// Asignar enlaces de WhatsApp
+// Asignar enlaces de WhatsApp y actualizar texto/pulso
 document.addEventListener("DOMContentLoaded", () => {
     const wpUrl = getWhatsAppLink();
     document.querySelectorAll('.whatsapp-link').forEach(link => {
         link.href = wpUrl;
+        link.classList.add('whatsapp-pulse');
+        if (link.querySelector('i')) {
+            // conserva el icono
+            link.innerHTML = '<i class="fab fa-whatsapp"></i> Apartar mi Cupo Ya';
+        } else if (link.id === 'wp-flotante') {
+            link.title = 'Apartar mi Cupo Ya';
+            link.setAttribute('aria-label', 'Apartar mi Cupo Ya');
+        } else {
+            link.textContent = 'Apartar mi Cupo Ya';
+        }
+    });
+
+    // Añadir botón visible en cada card (si no existe) y enlazarlo al mismo WhatsApp
+    document.querySelectorAll('.card').forEach(card => {
+        const body = card.querySelector('.card-body');
+        if (!body) return;
+        if (body.querySelector('.card-cta')) return; // evita duplicados
+        const a = document.createElement('a');
+        a.className = 'btn whatsapp small-btn whatsapp-link whatsapp-pulse card-cta';
+        a.href = wpUrl;
+        a.innerHTML = '<i class="fab fa-whatsapp"></i> Apartar mi Cupo Ya';
+        body.appendChild(a);
     });
 
     // Lógica del Menú Móvil (Nueva)
