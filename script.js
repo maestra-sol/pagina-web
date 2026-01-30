@@ -1,6 +1,6 @@
 // Configuración de WhatsApp Centralizada
 function getWhatsAppLink() {
-    const phoneNumber = "+573000000000"; // Reemplaza con tu número (código país+numero) sin + ni espacios, ej. 50212345678
+    const phoneNumber = "+50239512701"; // Reemplaza con tu número (código país+numero) sin + ni espacios, ej. 50212345678
     const message = "Hola Maestra Sol, quiero apartar mi cupo.";
     const baseUrl = "https://wa.me";
     return `${baseUrl}/${phoneNumber}?text=${encodeURIComponent(message)}`;
