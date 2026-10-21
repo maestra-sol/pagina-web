@@ -181,3 +181,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initAudioTestimonials();
 });
+
+// Número global de WhatsApp: código de país + número, sin + ni espacios.
+const WHATSAPP_NUMBER = "529992368419";
+
+// Actualizar todos los enlaces de WhatsApp de la página.
+document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+    const url = new URL(link.href);
+    url.pathname = "/" + WHATSAPP_NUMBER;
+    link.href = url.toString();
+});
